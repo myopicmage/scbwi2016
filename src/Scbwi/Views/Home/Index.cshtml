@@ -1,0 +1,175 @@
+﻿<div layout="column" flex ng-controller="RegistrationController as main">
+    <md-toolbar class="md-toolbar">
+        <div class="md-toolbar-tools">
+            <h3>
+                SCBWI Florida June Registration
+            </h3>
+        </div>
+    </md-toolbar>
+
+    <md-content layout="column" class="bgBody" layout-align="top start" flex="70" layout-padding md-scroll-y layout-fill>
+        <form name="regform">
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        Please provide some basic information
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <md-input-container>
+                        <label>First Name</label>
+                        <input ng-model="main.reg.first" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Last Name</label>
+                        <input ng-model="main.reg.last" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Email</label>
+                        <input ng-model="main.reg.email" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Phone</label>
+                        <input ng-model="main.reg.phone" />
+                    </md-input-container>
+
+                    <br />
+
+                    <md-input-container>
+                        <label>Address 1</label>
+                        <input ng-model="main.reg.address1" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Address 2</label>
+                        <input ng-model="main.reg.address2" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>City</label>
+                        <input ng-model="main.reg.city" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>State/Province</label>
+                        <input ng-model="main.reg.state" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Zip/Postal Code</label>
+                        <input ng-model="main.reg.zip" />
+                    </md-input-container>
+                </md-card-content>
+            </md-card>
+            <md-card ng-show="main.memberBox">
+                <md-card-title>
+                    Are you a member?
+                </md-card-title>
+                <md-card-actions>
+                    <md-button class="md-raised md-primary" ng-click="main.yes();">yes</md-button>
+                    <md-button class="md-raised md-primary" ng-click="main.no();">no</md-button>
+                </md-card-actions>
+            </md-card>
+            <md-card ng-show="main.showPackages">
+                <md-card-title>
+                    Please select a package
+                </md-card-title>
+                <md-card-content>
+                    <md-radio-group ng-model="main.reg.package" ng-change="main.packageSelect()">
+                        <div ng-repeat="package in main.packages" class="row">
+                            <div flex layout='row' layout-padding layout-align="start center">
+                                <div flex style="max-width:100px;">
+                                    <b>${{package.price}}</b>
+                                </div>
+                                <md-radio-button flex ng-value="package.id" class="md-primary">
+                                    <b>{{package.title}}</b> - {{package.description}}
+                                </md-radio-button>
+                            </div>
+                        </div>
+                    </md-radio-group>
+                </md-card-content>
+            </md-card>
+            <md-card ng-show="main.isMember">
+                <md-card-title>
+                    Optional: Select a Comprehensive
+                </md-card-title>
+                <md-card-content>
+                    <md-radio-group ng-model="main.reg.comprehensive" ng-change="main.packageSelect()">
+                        <div ng-repeat="comprehensive in main.comprehensives" class="row">
+                            <div flex layout='row' layout-padding layout-align="start center">
+                                <div flex style="max-width: 100px;">
+                                    <b>${{comprehensive.price}}</b>
+                                </div>
+                                <md-radio-button flex ng-value="comprehensive.id" class="md-primary">
+                                    <b>{{comprehensive.title}}</b> - {{comprehensive.description}}
+                                    <br />
+                                    Presented By: {{comprehensive.presenters}}
+                                </md-radio-button>
+                            </div>
+                        </div>
+                    </md-radio-group>
+                </md-card-content>
+            </md-card>
+            <md-card ng-show="main.showTracks">
+                <md-card-title>
+                    Select a Track
+                </md-card-title>
+                <md-card-content>
+                    <md-radio-group ng-model="main.reg.track">
+                        <div ng-repeat="track in main.tracks" class="row">
+                            <div flex layout='row' layout-padding layout-align="start center">
+                                <div flex style="max-width:200px;">
+                                    <b>{{track.title}}</b>
+                                </div>
+                                <md-radio-button flex ng-value="track.id" class="md-primary">
+                                    Presented By: {{track.presenters}}
+                                </md-radio-button>
+                            </div>
+                        </div>
+                    </md-radio-group>
+                </md-card-content>
+            </md-card>
+            <md-card ng-show="main.showPackages">
+                <md-card-title>
+                    Would you like any critiques?
+                </md-card-title>
+                <md-card-content>
+                    <div class="row">
+                        <div flex layout='row' layout-padding layout-align="start center">
+                            <div flex style="max-width:100px;">
+                                <b>$50</b>
+                            </div>
+                            <md-checkbox flex ng-value="manuscript" class="md-primary" ng-model="main.m_critique">
+                                Manuscript Critique
+                            </md-checkbox>
+                            <md-input-container ng-show="main.m_critique === true" flex>
+                                <label>How many?</label>
+                                <input type="text" ng-model="main.reg.manuscript" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div flex layout='row' layout-padding layout-align="start center">
+                            <div flex style="max-width:100px;">
+                                <b>$50</b>
+                            </div>
+                            <md-checkbox flex ng-value="portfolio" class="md-primary" ng-model="main.p_critique">
+                                Portfolio Review
+                            </md-checkbox>
+                            <md-input-container ng-show="main.p_critique === true" flex>
+                                <label>How many?</label>
+                                <input type="text" ng-model="main.reg.portfolio" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                </md-card-content>
+            </md-card>
+            <md-card ng-show="main.showPackages">
+                <md-card-title>
+                    Verify Total
+                </md-card-title>
+                <md-card-actions>
+                    <md-button class="md-raised md-primary" ng-click="main.calculate();">Calculate</md-button>
+                    <span ng-show="main.hasTotal">{{main.reg.total}}</span>
+                    <md-button ng-show="main.allowSubmit" ng-click="main.submit();" class="md-primary md-raised">Register!</md-button>
+                </md-card-actions>
+            </md-card>
+        </form>
+    </md-content>
+</div>

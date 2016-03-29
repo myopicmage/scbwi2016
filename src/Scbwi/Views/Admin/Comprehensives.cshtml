@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewBag.Title = "Comprehensives";
+}
+
+<div layout="column" flex ng-controller="ComprehensiveController as main">
+    <md-toolbar class="md-toolbar">
+        <div class="md-toolbar-tools">
+            <h3>
+                Comprehensives
+            </h3>
+        </div>
+    </md-toolbar>
+
+    <md-content layout="column" class="bgBody" layout-align="top start" flex layout-padding md-scroll-y layout-fill>
+        <form name="packageform">
+            <md-card>
+                <md-card-title>
+                    <h4>Existing Comprehensives</h4>
+                </md-card-title>
+                <md-card-content>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Presenters</th>
+                                <th>Max Attendees</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="c in main.comprehensives">
+                                <td>{{c.title}}</td>
+                                <td>{{c.description}}</td>
+                                <td>{{c.presenters}}</td>
+                                <td>{{c.maxattendees}}</td>
+                                <td>${{c.price}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-card-content>
+            </md-card>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <h4>Add New Comphrensive</h4>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-divider></md-divider>
+                <md-card-content>
+                    <md-input-container>
+                        <label>Title</label>
+                        <input type="text" ng-model="main.newc.title" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Description</label>
+                        <input type="text" ng-model="main.newc.description" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Presenters</label>
+                        <input type="text" ng-model="main.newc.presenters" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Price</label>
+                        <input type="text" ng-model="main.newc.price" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Max Attendees</label>
+                        <input type="text" ng-model="main.newc.maxattendees" />
+                    </md-input-container>
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button ng-click="main.Submit()" class="md-raised md-primary">Submit</md-button>
+                </md-card-actions>
+            </md-card>
+        </form>
+    </md-content>
+</div>

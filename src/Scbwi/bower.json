@@ -1,0 +1,8 @@
+{
+  "name": "ASP.NET",
+  "private": true,
+  "dependencies": {
+    "jquery-validation-unobtrusive": "3.2.4",
+    "angular-material": "~1.0.6"
+  }
+}

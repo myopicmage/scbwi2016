@@ -1,0 +1,163 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewBag.Title = "Administration";
+}
+
+<div layout="column" class="bgBody" layout-fill ng-controller="DashboardCtrl as dashboard">
+    <md-toolbar class="md-toolbar">
+        <div class="md-toolbar-tools">
+            <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+                <i class="material-icons">menu</i>
+            </md-button>
+            <h3>
+                Dashboard
+            </h3>
+        </div>
+    </md-toolbar>
+
+    <md-content layout="row" class="bgBody" layout-align="center start" flex layout-padding md-scroll-y>
+        <div flex="50" layout="column">
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Registration Dashboard</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <div layout>
+                        Total Registrations: 1
+                    </div>
+                </md-card-content>
+            </md-card>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Search Registrations</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <div layout>
+                        <md-autocomplete flex ng-disabled="false"
+                                         md-no-cache="false"
+                                         md-selected-item="dashboard.selectedMember"
+                                         md-search-text="dashboard.searchText"
+                                         md-items="member in dashboard.memberSearch(dashboard.searchText)"
+                                         md-item-text="member.firstname + ' '+ member.lastname +' - ' + member.membernumber"
+                                         md-min-length="3"
+                                         placeholder="Enter a name"
+                                         md-menu-class="autocomplete-custom-template">
+                            <md-item-template>
+                                <span class="item-title" md-highlight-text="dashboard.searchText" md-highlight-flags="^i">{{member.firstname}} {{member.lastname}}</span>
+                                <span class="item-metadata"> {{member.membernumber}} - {{member.dob}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                No registrations matching "{{dashboard.searchText}}" were found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="end center" ng-click="dashboard.goMember();">
+                    <md-button>Search</md-button>
+                </md-card-actions>
+            </md-card>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Total Money Made</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <div flex layout="row">
+                        <div flex>
+                            Completed: $1234
+                        </div>
+                        <div flex>
+                            Pending: $150
+                        </div>
+                    </div>
+                </md-card-content>
+            </md-card>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Comprehensives</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <div class="table-responsive-vertical">
+                    <table class="table table-hover table-mc-light-blue">
+                        <thead>
+                            <tr>
+                                <th>Comprehensives</th>
+                                <th>Number Enrolled</th>
+                                <th>Max</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-title="user">Novel</td>
+                                <td data-title="time">5</td>
+                                <td data-title="thing">25</td>
+                            </tr>
+                            <tr>
+                                <td data-title="user">Poetry</td>
+                                <td data-title="time">5</td>
+                                <td data-title="thing">25</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </md-card>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Tracks</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <div class="table-responsive-vertical">
+                    <table class="table table-hover table-mc-light-blue">
+                        <thead>
+                            <tr>
+                                <th>Track</th>
+                                <th>Number Enrolled</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-title="user">Novel</td>
+                                <td data-title="time">5</td>
+                            </tr>
+                            <tr>
+                                <td data-title="user">Poetry</td>
+                                <td data-title="time">5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </md-card>
+        </div>
+        <div layout="column" flex="50">
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Notifications</span>
+                        <span class="md-subhead">You have {{dashboard.notifications.length}} new notifications</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <md-list>
+                        <md-list-item class="md-3-line">
+                            <md-icon class="material-icons" style="font-size:24px;vertical-align:central; color:#f44336">assignment</md-icon>
+                            <div class="md-list-item-text">
+                                <p style="color: black; font-size: .9em;">Registration Submitted at 2015-03-15 19:35</p>
+                                <p>
+                                    <a href="" ng-click="dashboard.markAsSeen(notification.id)"> x </a>
+                                </p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-card-content>
+            </md-card>
+        </div>
+    </md-content>
+</div>

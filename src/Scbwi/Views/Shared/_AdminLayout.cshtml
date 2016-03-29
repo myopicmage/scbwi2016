@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html ng-app="Scbwi" ng-cloak>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SCBWI Florida Dashboard</title>
+
+    <link rel="stylesheet" href="~/lib/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body layout="row" ng-controller="AppCtrl as main">
+    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <md-toolbar class="md-toolbar md-accent">
+            <h1 class="md-toolbar-tools">
+                Administration
+            </h1>
+        </md-toolbar>
+        <md-list class="left-menu">
+            <md-subheader>Main Menu</md-subheader>
+            <md-list-item>
+                <a ng-click="main.goHome();">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <md-button class="md-fab md-primary md-mini">
+                                <md-icon class="material-icons menu-icon">dashboard</md-icon>
+                            </md-button>
+                        </div>
+                        <div class="inset menu-text">
+                            Dashboard
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-list-item>
+                <a ng-click="main.AddPackage();">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <md-button class="md-fab md-primary md-mini">{{main.hraqueuetotal}}</md-button>
+                        </div>
+                        <div class="inset menu-text">
+                            Registration Types
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-list-item>
+            <md-list-item>
+                <a ng-click="main.getNextHRAMember();">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <md-button class="md-fab md-primary md-mini">{{main.hraqueuetotal}}</md-button>
+                        </div>
+                        <div class="inset menu-text">
+                            Comprehensives
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-list-item>
+            <md-list-item>
+                <a ng-click="main.getNextHRAReassessMember();">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <md-button class="md-fab md-primary md-mini">{{main.hrareassess}}</md-button>
+                        </div>
+                        <div class="inset menu-text">
+                            Tracks
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-list-item>
+            <md-list-item>
+                <a ng-click="main.getPendingActions();">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                        </div>
+                        <div class="inset menu-text">
+                            Important Dates
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-list-item>
+            <md-list-item>
+                <a ng-click="main.getPendingActions();">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                        </div>
+                        <div class="inset menu-text">
+                            Critiques
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-list-item>
+            <md-list-item>
+                <a ng-click="main.getPendingActions();">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                        </div>
+                        <div class="inset menu-text">
+                            Volunteers
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-list-item>
+            <md-list-item>
+                <a ng-click="main.getPendingActions();">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                        </div>
+                        <div class="inset menu-text">
+                            Volunteer Tasks
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-subheader>Management</md-subheader>
+            <md-list-item>
+                <a ng-click="main.getPendingActions();">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                        </div>
+                        <div class="inset menu-text">
+                            Registrations
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-list-item>
+            <md-list-item>
+                <a ng-click="main.getPendingActions();">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                        </div>
+                        <div class="inset menu-text">
+                            Manually Add Registration
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-list-item>
+            <md-list-item>
+                <a ng-click="main.getPendingActions();">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                        </div>
+                        <div class="inset menu-text">
+                            Dump Spreadsheet
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-list-item>
+        </md-list>
+    </md-sidenav>
+
+    @RenderBody()
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-messages.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-aria.js"></script>
+    <script src="~/lib/angular-material/angular-material.js"></script>
+
+    <script src="~/js/app.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
