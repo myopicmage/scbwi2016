@@ -8,8 +8,8 @@ using Scbwi.Models;
 namespace Scbwi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160322002900_first")]
-    partial class first
+    [Migration("20160329212057_setup")]
+    partial class setup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -171,6 +171,8 @@ namespace Scbwi.Migrations
 
                     b.Property<int>("numuses");
 
+                    b.Property<string>("text");
+
                     b.Property<int>("type");
 
                     b.Property<decimal>("value");
@@ -253,7 +255,7 @@ namespace Scbwi.Migrations
 
                     b.Property<DateTime>("paid");
 
-                    b.Property<string>("paypaid");
+                    b.Property<string>("paypalid");
 
                     b.Property<string>("phone");
 

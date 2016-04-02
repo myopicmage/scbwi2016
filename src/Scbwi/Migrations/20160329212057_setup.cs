@@ -4,7 +4,7 @@ using Microsoft.Data.Entity.Migrations;
 
 namespace Scbwi.Migrations
 {
-    public partial class first : Migration
+    public partial class setup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,6 +68,7 @@ namespace Scbwi.Migrations
                     id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     numuses = table.Column<int>(nullable: false),
+                    text = table.Column<string>(nullable: true),
                     @type = table.Column<int>(name: "type", nullable: false),
                     value = table.Column<decimal>(nullable: false)
                 },
@@ -219,7 +220,7 @@ namespace Scbwi.Migrations
                     last = table.Column<string>(nullable: true),
                     packageid = table.Column<int>(nullable: true),
                     paid = table.Column<DateTime>(nullable: false),
-                    paypaid = table.Column<string>(nullable: true),
+                    paypalid = table.Column<string>(nullable: true),
                     phone = table.Column<string>(nullable: true),
                     state = table.Column<string>(nullable: true),
                     submitted = table.Column<DateTime>(nullable: false),

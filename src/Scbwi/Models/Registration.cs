@@ -17,7 +17,7 @@ namespace Scbwi.Models {
         public string country { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
-        public string paypaid { get; set; }
+        public string paypalid { get; set; }
 
         public virtual Package package { get; set; }
         public virtual Comprehensive comprehensive { get; set; }

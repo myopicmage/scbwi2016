@@ -170,6 +170,8 @@ namespace Scbwi.Migrations
 
                     b.Property<int>("numuses");
 
+                    b.Property<string>("text");
+
                     b.Property<int>("type");
 
                     b.Property<decimal>("value");
@@ -252,7 +254,7 @@ namespace Scbwi.Migrations
 
                     b.Property<DateTime>("paid");
 
-                    b.Property<string>("paypaid");
+                    b.Property<string>("paypalid");
 
                     b.Property<string>("phone");
 

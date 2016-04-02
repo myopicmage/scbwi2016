@@ -7,7 +7,7 @@
         </div>
     </md-toolbar>
 
-    <md-content layout="column" class="bgBody" layout-align="top start" flex="70" layout-padding md-scroll-y layout-fill>
+    <md-content layout="column" class="bgBody" layout-align="top start" flex="70" layout-padding md-scroll-y layout-fill ng-hide="main.timetopay">
         <form name="regform">
             <md-card>
                 <md-card-title>
@@ -31,6 +31,10 @@
                     <md-input-container>
                         <label>Phone</label>
                         <input ng-model="main.reg.phone" />
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Country</label>
+                        <input ng-model="main.reg.country" />
                     </md-input-container>
 
                     <br />
@@ -162,14 +166,36 @@
             </md-card>
             <md-card ng-show="main.showPackages">
                 <md-card-title>
-                    Verify Total
+                    Verify
                 </md-card-title>
-                <md-card-actions>
-                    <md-button class="md-raised md-primary" ng-click="main.calculate();">Calculate</md-button>
-                    <span ng-show="main.hasTotal">{{main.reg.total}}</span>
-                    <md-button ng-show="main.allowSubmit" ng-click="main.submit();" class="md-primary md-raised">Register!</md-button>
+                <md-card-content>
+                    If you have a coupon code, enter it now:<br />
+                    <md-input-container>
+                        <label>Code</label>
+                        <input type="text" ng-model="main.reg.coupon" />
+                    </md-input-container>
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="start center">
+                    <md-button class="md-raised md-primary" ng-click="main.calculate();" flex="10">Calculate</md-button>
+                    <span ng-show="main.hasTotal" flex="30" style="text-align: center;">Your total is <b>${{main.reg.subtotal}}</b> but you will pay <b>${{main.reg.total}}</b></span>
+                    <md-button ng-show="main.allowSubmit" ng-click="main.submit();" class="md-primary md-raised">Submit & Pay!</md-button>
                 </md-card-actions>
             </md-card>
         </form>
+    </md-content>
+    <md-content ng-show="main.timetopay">
+        <md-card>
+            <md-card-content>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                    <input type="hidden" name="cmd" value="_xclick" />
+                    <input type="hidden" name="business" value="linda@scbwiflorida.com" />
+                    <input type="hidden" name="item_name" value="SCBWI Florida June Conference 2016" />
+                    <input type="hidden" name="currency_code" value="USD" />
+                    <input type="hidden" name="custom" value="{{main.paypal.paypalid}}" />
+                    <input type="hidden" name="amount" value="{{main.paypal.total}}" />
+                    <input type="submit" name="submit" value="Continue" />
+                </form>
+            </md-card-content>
+        </md-card>
     </md-content>
 </div>

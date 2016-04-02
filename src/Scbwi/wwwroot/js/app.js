@@ -39,13 +39,9 @@ app.config(function ($mdThemingProvider) {
 app.controller('AppCtrl', function () {
     var self = this;
 
-    self.AddPackage = function () {
-        window.location = '/admin/addpackage';
+    self.go = function (url) {
+        window.location = url;
     };
-
-    self.goHome = function () {
-        window.location = '/admin';
-    }
 });
 
 app.controller('RegCtrl', function ($http, $scope) {
@@ -65,6 +61,7 @@ app.controller('RegistrationController', function ($http, $scope) {
     self.showTracks = false;
     self.memberBox = true;
     self.showPackages = false;
+    self.timetopay = false;
 
     self.packageSelect = function () {
         self.showTracks = true;
@@ -83,14 +80,49 @@ app.controller('RegistrationController', function ($http, $scope) {
         self.showPackages = true;
     };
 
+    self.getViewModel = function () {
+        return {
+            first: self.reg.first,
+            last: self.reg.last,
+            address1: self.reg.address1,
+            address2: self.reg.address2,
+            city: self.reg.city,
+            state: self.reg.state,
+            zip: self.reg.zip,
+            country: self.reg.country,
+            email: self.reg.email,
+            phone: self.reg.phone,
+            packageid: self.reg.package,
+            comprehensiveid: self.reg.comprehensive,
+            trackid: self.reg.track,
+            couponid: self.reg.coupon,
+            manuscripts: self.reg.manuscript,
+            portfolio: self.reg.portfolio
+        };
+    };
+
     self.calculate = function () {
-        self.hasTotal = true;
-        self.allowSubmit = true;
-        self.reg.total = '$200';
+        $http({
+            method: 'post',
+            url: '/info/calculatetotal',
+            data: self.getViewModel()
+        }).then(function (data) {
+            self.reg.total = data.data.total;
+            self.reg.subtotal = data.data.subtotal;
+            self.hasTotal = true;
+            self.allowSubmit = true;
+        });
     };
 
     self.submit = function () {
-
+        $http({
+            method: 'post',
+            url: '/info/submit',
+            data: self.getViewModel()
+        }).then(function (data) {
+            self.paypal = data.data;
+            self.timetopay = true;
+        });
     };
 
     $http({

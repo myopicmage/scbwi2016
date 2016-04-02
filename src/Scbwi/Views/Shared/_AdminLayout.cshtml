@@ -21,7 +21,7 @@
         <md-list class="left-menu">
             <md-subheader>Main Menu</md-subheader>
             <md-list-item>
-                <a ng-click="main.goHome();">
+                <a ng-click="main.go('/admin');">
                     <md-item-content md-ink-ripple layout="row" layout-align="start center">
                         <div class="inset">
                             <md-button class="md-fab md-primary md-mini">
@@ -36,7 +36,7 @@
             </md-list-item>
             <md-divider></md-divider>
             <md-list-item>
-                <a ng-click="main.AddPackage();">
+                <a ng-click="main.go('/admin/registrationtypes');">
                     <md-item-content md-ink-ripple layout="row" layout-align="start center">
                         <div class="inset">
                             <md-button class="md-fab md-primary md-mini">{{main.hraqueuetotal}}</md-button>
@@ -48,7 +48,7 @@
                 </a>
             </md-list-item>
             <md-list-item>
-                <a ng-click="main.getNextHRAMember();">
+                <a ng-click="main.go('/admin/comprehensives');">
                     <md-item-content md-ink-ripple layout="row" layout-align="start center">
                         <div class="inset">
                             <md-button class="md-fab md-primary md-mini">{{main.hraqueuetotal}}</md-button>
@@ -60,7 +60,7 @@
                 </a>
             </md-list-item>
             <md-list-item>
-                <a ng-click="main.getNextHRAReassessMember();">
+                <a ng-click="main.go('/admin/tracks');">
                     <md-item-content md-ink-ripple layout="row" layout-align="start center">
                         <div class="inset">
                             <md-button class="md-fab md-primary md-mini">{{main.hrareassess}}</md-button>
@@ -72,91 +72,103 @@
                 </a>
             </md-list-item>
             <md-list-item>
-                <a ng-click="main.getPendingActions();">
+                <a ng-click="main.go('/account/logoff');">
                     <md-item-content md-ink-ripple layout="row" layout-align="start center">
                         <div class="inset">
-                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                            <md-button class="md-fab md-primary md-mini">{{main.hrareassess}}</md-button>
                         </div>
                         <div class="inset menu-text">
-                            Important Dates
+                            Log out
                         </div>
                     </md-item-content>
                 </a>
             </md-list-item>
-            <md-list-item>
-                <a ng-click="main.getPendingActions();">
-                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
-                        <div class="inset">
-                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
-                        </div>
-                        <div class="inset menu-text">
-                            Critiques
-                        </div>
-                    </md-item-content>
-                </a>
-            </md-list-item>
-            <md-list-item>
-                <a ng-click="main.getPendingActions();">
-                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
-                        <div class="inset">
-                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
-                        </div>
-                        <div class="inset menu-text">
-                            Volunteers
-                        </div>
-                    </md-item-content>
-                </a>
-            </md-list-item>
-            <md-list-item>
-                <a ng-click="main.getPendingActions();">
-                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
-                        <div class="inset">
-                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
-                        </div>
-                        <div class="inset menu-text">
-                            Volunteer Tasks
-                        </div>
-                    </md-item-content>
-                </a>
-            </md-list-item>
-            <md-divider></md-divider>
-            <md-subheader>Management</md-subheader>
-            <md-list-item>
-                <a ng-click="main.getPendingActions();">
-                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
-                        <div class="inset">
-                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
-                        </div>
-                        <div class="inset menu-text">
-                            Registrations
-                        </div>
-                    </md-item-content>
-                </a>
-            </md-list-item>
-            <md-list-item>
-                <a ng-click="main.getPendingActions();">
-                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
-                        <div class="inset">
-                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
-                        </div>
-                        <div class="inset menu-text">
-                            Manually Add Registration
-                        </div>
-                    </md-item-content>
-                </a>
-            </md-list-item>
-            <md-list-item>
-                <a ng-click="main.getPendingActions();">
-                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
-                        <div class="inset">
-                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
-                        </div>
-                        <div class="inset menu-text">
-                            Dump Spreadsheet
-                        </div>
-                    </md-item-content>
-                </a>
-            </md-list-item>
+            @*<md-list-item>
+                    <a ng-click="main.getPendingActions();">
+                        <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                            <div class="inset">
+                                <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                            </div>
+                            <div class="inset menu-text">
+                                Important Dates
+                            </div>
+                        </md-item-content>
+                    </a>
+                </md-list-item>
+                <md-list-item>
+                        <a ng-click="main.getPendingActions();">
+                            <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                                <div class="inset">
+                                    <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                                </div>
+                                <div class="inset menu-text">
+                                    Critiques
+                                </div>
+                            </md-item-content>
+                        </a>
+                    </md-list-item>
+                    <md-list-item>
+                        <a ng-click="main.getPendingActions();">
+                            <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                                <div class="inset">
+                                    <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                                </div>
+                                <div class="inset menu-text">
+                                    Volunteers
+                                </div>
+                            </md-item-content>
+                        </a>
+                    </md-list-item>
+                    <md-list-item>
+                        <a ng-click="main.getPendingActions();">
+                            <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                                <div class="inset">
+                                    <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                                </div>
+                                <div class="inset menu-text">
+                                    Volunteer Tasks
+                                </div>
+                            </md-item-content>
+                        </a>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                    <md-subheader>Management</md-subheader>
+                    <md-list-item>
+                        <a ng-click="main.getPendingActions();">
+                            <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                                <div class="inset">
+                                    <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                                </div>
+                                <div class="inset menu-text">
+                                    Registrations
+                                </div>
+                            </md-item-content>
+                        </a>
+                    </md-list-item>
+                    <md-list-item>
+                        <a ng-click="main.getPendingActions();">
+                            <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                                <div class="inset">
+                                    <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                                </div>
+                                <div class="inset menu-text">
+                                    Manually Add Registration
+                                </div>
+                            </md-item-content>
+                        </a>
+                    </md-list-item>
+                    <md-list-item>
+                        <a ng-click="main.getPendingActions();">
+                            <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                                <div class="inset">
+                                    <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                                </div>
+                                <div class="inset menu-text">
+                                    Dump Spreadsheet
+                                </div>
+                            </md-item-content>
+                        </a>
+                    </md-list-item>*@
         </md-list>
     </md-sidenav>
 
