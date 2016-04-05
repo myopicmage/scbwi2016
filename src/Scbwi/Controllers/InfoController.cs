@@ -95,6 +95,9 @@ namespace Scbwi.Controllers {
                         case CodeType.Total:
                             total = coupon.value;
                             break;
+                        case CodeType.Critique:
+                            if (portfolio >= 50 || manuscript >= 50) total = subtotal - 50;
+                            break;
                         default: break;
                     }
                 }
@@ -103,7 +106,7 @@ namespace Scbwi.Controllers {
                     subtotal = subtotal,
                     total = total
                 };
-            } catch (Exception ex) {
+            } catch {
                 return new Totals {
                     subtotal = 0,
                     total = 0
@@ -142,19 +145,15 @@ namespace Scbwi.Controllers {
                 track = await db.Tracks.SingleOrDefaultAsync(x => x.id == r.trackid)
             };
 
-            for (int i = 0; i < r.manuscript; i++)
-            {
-                registration.critiques.Add(new Critique
-                {
+            for (int i = 0; i < r.manuscript; i++) {
+                registration.critiques.Add(new Critique {
                     price = 50,
                     type = "Manuscript"
                 });
             }
 
-            for (int i = 0; i < r.portfolio; i++)
-            {
-                registration.critiques.Add(new Critique
-                {
+            for (int i = 0; i < r.portfolio; i++) {
+                registration.critiques.Add(new Critique {
                     price = 50,
                     type = "Portfolio"
                 });
@@ -163,8 +162,7 @@ namespace Scbwi.Controllers {
             db.Registrations.Add(registration);
             db.SaveChanges();
 
-            return Json(new
-            {
+            return Json(new {
                 total = totals.total,
                 paypalid = paypalid
             });

@@ -17,24 +17,36 @@ namespace Scbwi.Controllers {
             db = appctx;
         }
 
-        public IActionResult Index() {
-            return View();
-        }
+        public IActionResult Index() => View();
 
-        public IActionResult RegistrationTypes() {
-            return View();
-        }
+        public IActionResult RegistrationTypes() => View();
 
-        public IActionResult Tracks() {
-            return View();
-        }
-        public IActionResult Comprehensives() {
-            return View();
-        }
+        public IActionResult Tracks() => View();
+
+        public IActionResult Comprehensives() => View();
+
+        public IActionResult Dates() => View();
+
+        public IActionResult Coupons() => View();
+
+        public IActionResult Registrations() => View();
 
         public IActionResult GetPackages() => Json(db.Packages.ToList());
 
         public IActionResult GetComprehensives() => Json(db.Comprehensives.ToList());
+
+        public IActionResult GetDates() => Json(db.Dates.ToList());
+
+        public IActionResult GetRegistrations() => Json(db.Registrations.ToList());
+
+        public IActionResult GetCoupons() => Json(db
+            .CouponCodes
+            .ToList()
+            .Select(x => new {
+                type = x.type.ToString(),
+                value = x.value,
+                text = x.text
+            }));
 
         [HttpPost]
         public IActionResult AddPackage([FromBody] Package p) {
@@ -58,6 +70,24 @@ namespace Scbwi.Controllers {
         public IActionResult AddComprehensive([FromBody] Comprehensive c) {
             if (ModelState.IsValid) {
                 db.Comprehensives.Add(c);
+                db.SaveChanges();
+            }
+
+            return Json(true);
+        }
+
+        public IActionResult AddCoupon([FromBody] CouponCode c) {
+            if (ModelState.IsValid) {
+                db.CouponCodes.Add(c);
+                db.SaveChanges();
+            }
+
+            return Json(true);
+        }
+
+        public IActionResult AddDate([FromBody] ImportantDate d) {
+            if (ModelState.IsValid) {
+                db.Dates.Add(d);
                 db.SaveChanges();
             }
 

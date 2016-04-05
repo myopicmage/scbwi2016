@@ -9,6 +9,7 @@
 
     public enum CodeType {
         Percent,
-        Total
+        Total,
+        Critique
     }
 }

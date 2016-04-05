@@ -264,3 +264,73 @@ app.controller('ComprehensiveController', function ($http) {
 
     self.getComprehensives();
 });
+
+app.controller('CouponController', function ($http) {
+    var self = this;
+
+    self.coupons = [];
+
+    self.getCoupons = function () {
+        $http({
+            method: 'post',
+            url: '/admin/getcoupons'
+        }).then(function (data) {
+            self.coupons = data.data;
+        });
+    };
+
+    self.Submit = function () {
+        $http({
+            method: 'post',
+            url: '/admin/addcoupon',
+            data: {
+                type: main.newcoupon.type,
+                value: main.newcoupon.value,
+                text: main.newcoupon.text
+            }
+        })
+        .then(function (data) {
+            self.newcoupon = {};
+            self.getCoupons();
+        }, function (data) {
+            console.log(data);
+        });
+    };
+
+    self.getCoupons();
+});
+
+app.controller('DateController', function ($http) {
+    var self = this;
+
+    self.dates = [];
+
+    self.getDates = function () {
+        $http({
+            method: 'post',
+            url: '/admin/getdates'
+        }).then(function (data) {
+            self.dates = data.data;
+        });
+    };
+
+    self.Submit = function () {
+        $http({
+            method: 'post',
+            url: '/admin/adddate',
+            data: {
+                type: main.newcoupon.type,
+                value: main.newcoupon.value,
+                text: main.newcoupon.text
+            }
+        })
+        .then(function (data) {
+            self.newdate = {};
+            self.getDates();
+        }, function (data) {
+            console.log(data);
+        });
+    };
+
+    self.getDates();
+});

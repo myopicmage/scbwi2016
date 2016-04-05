@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewBag.Title = "Dates";
+}
+
+<div layout="column" flex ng-controller="DateController as main">
+    <md-toolbar class="md-toolbar">
+        <div class="md-toolbar-tools">
+            <h3>
+                Dates
+            </h3>
+        </div>
+    </md-toolbar>
+
+    <md-content layout="column" class="bgBody" layout-align="top start" flex layout-padding md-scroll-y layout-fill>
+        <form name="packageform">
+            <md-card>
+                <md-card-title>
+                    <h4>Existing Dates</h4>
+                </md-card-title>
+                <md-card-content>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="date in main.dates">
+                                <td>{{date.title}}</td>
+                                <td>{{date.date}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-card-content>
+            </md-card>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <h4>Add New Date</h4>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-divider></md-divider>
+                <md-card-content>
+                    <md-input-container>
+                        <label>Title</label>
+                        <input type="text" ng-model="main.newdate.title" />
+                    </md-input-container>
+                    <md-datepicker ng-model="main.newdate.date" md-placeholder="Date"></md-datepicker>
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button ng-click="main.Submit()" class="md-raised md-primary">Submit</md-button>
+                </md-card-actions>
+            </md-card>
+        </form>
+    </md-content>
+</div>
