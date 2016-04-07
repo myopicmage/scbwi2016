@@ -160,7 +160,7 @@ namespace Scbwi.Controllers {
             }
 
             db.Registrations.Add(registration);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return Json(new {
                 total = totals.total,

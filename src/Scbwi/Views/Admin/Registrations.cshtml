@@ -1,5 +1,66 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    Layout = "_AdminLayout";
+    ViewBag.Title = "Registrations";
 }
+
+<div layout="column" flex ng-controller="RegCtrl as main">
+    <md-toolbar class="md-toolbar">
+        <div class="md-toolbar-tools">
+            <h3>
+                Registrations
+            </h3>
+        </div>
+    </md-toolbar>
+
+    <md-content layout-padding class="bgBody">
+        <md-list>
+            <md-list-item ng-repeat="reg in main.registrations" layout-padding>
+                <md-card layout-fill>
+                    <md-card-title style="border-bottom: 1px solid #ececec">
+                        <h2>{{reg.id}} {{reg.first}} {{reg.last}}</h2>
+                    </md-card-title>
+                    <md-card-content layout-padding>
+                        <div layout="row" flex>
+                            <div flex>
+                                <b>Address</b><br />
+                                {{reg.address1}}<br />
+                                {{reg.address2}}<br />
+                                {{reg.city}}, {{reg.state}} {{reg.zip}}<br />
+                                {{reg.country}}<br /><br />
+                                <b>Contact Information</b><br />
+                                <b>Email:</b> {{reg.email}}<br />
+                                <b>Phone:</b> {{reg.phone}}
+                            </div>
+                            <div flex>
+                                <b>Registration Type:</b> {{reg.package}}<br />
+                                <b>Comprehensive:</b> {{reg.comprehensive}}<br />
+                                <b>Track:</b> {{reg.track}}<br />
+                                <b>Portfolio Reviews:</b> {{reg.portfolio}}<br />
+                                <b>Manuscript Critiques:</b> {{reg.manuscript}}
+                            </div>
+                            <div flex>
+                                <b>Coupon Used:</b> {{reg.coupon}}<br />
+
+                                <span><b>Subtotal: </b> ${{reg.subtotal}}</span><br />
+                                <span><b>Total:</b> ${{reg.total}}</span><br />
+
+                                <span><b>Submitted: </b> {{reg.submitted | date : 'MM/dd/yyyy hh:mm:ss a'}}</span><br />
+                                <span><b>Paid:</b> {{reg.paid | date : 'MM/dd/yyyy hh:mm:ss a'}}</span><br />
+                                <span><b>Cleared:</b> {{reg.cleared | date : 'MM/dd/yyyy hh:mm:ss a'}}</span><br />
+                            </div>
+                        </div>
+                    </md-card-content>
+                    <md-card-actions layout="row" layout-align="end center" ng-show="!!main.areyousure[reg.id] == false;">
+                        <md-button class="md-raised md-accent" ng-click="main.areyousure[reg.id] = true;">Delete</md-button>
+                        @*<md-button class="md-raised md-primary">Edit</md-button>*@
+                    </md-card-actions>
+                    <md-card-actions layout="row" layout-align="end-center" ng-show="!!main.areyousure[reg.id] == true;">
+                        <span style="margin-right: 10px; font-weight: bold;">Are you sure?</span>
+                        <md-button class="md-raised md-primary" ng-click="main.confirmDelete(reg.id)">Yes</md-button>
+                        <md-button class="md-raised md-warn" ng-click="main.areyousure[reg.id] = false;">No</md-button>
+                    </md-card-actions>
+                </md-card>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</div>

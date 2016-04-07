@@ -1,4 +1,6 @@
-﻿namespace Scbwi.Models {
+﻿using System.Collections.Generic;
+
+namespace Scbwi.Models {
     public class CouponCode {
         public int id { get; set; }
         public CodeType type { get; set; }

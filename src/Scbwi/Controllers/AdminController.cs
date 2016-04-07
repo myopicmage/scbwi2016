@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Scbwi.Models;
 using Microsoft.AspNet.Authorization;
-
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+using Microsoft.Data.Entity;
 
 namespace Scbwi.Controllers {
     [Authorize]
@@ -37,7 +36,16 @@ namespace Scbwi.Controllers {
 
         public IActionResult GetDates() => Json(db.Dates.ToList());
 
-        public IActionResult GetRegistrations() => Json(db.Registrations.ToList());
+        public IActionResult GetRegistrations() {
+            var r = db.Registrations
+               .Include(x => x.comprehensive)
+               .Include(x => x.track)
+               .Include(x => x.package)
+               .Include(x => x.code)
+               .ToList();
+
+            return Json(ToDTOList(r));
+        }
 
         public IActionResult GetCoupons() => Json(db
             .CouponCodes
@@ -101,5 +109,50 @@ namespace Scbwi.Controllers {
 
             return Json(true);
         }
+
+        [HttpPost]
+        public IActionResult DeleteRegistration(int regid) {
+            var r = db.Registrations.SingleOrDefault(x => x.id == regid);
+
+            if (r == null) {
+                return Json(false);
+            }
+
+            try {
+                db.Registrations.Remove(r);
+                db.SaveChanges();
+            } catch {
+                return Json(false);
+            }
+
+            return Json(true);
+        }
+
+        private List<RegistrationDTO> ToDTOList(List<Registration> list) => list.Select(x => ToDTO(x)).ToList();
+
+        private RegistrationDTO ToDTO(Registration r) => new RegistrationDTO {
+            address1 = r.address1,
+            address2 = r.address2,
+            city = r.city,
+            cleared = r.cleared,
+            comprehensive = r.comprehensive?.title ?? "None",
+            country = r.country,
+            coupon = r.code?.text ?? "None",
+            email = r.email,
+            first = r.first,
+            id = r.id,
+            last = r.last,
+            manuscript = r.critiques?.Where(x => x.type == "Manuscript")?.Count() ?? 0,
+            package = r.package?.title ?? "None",
+            paid = r.paid,
+            phone = r.phone,
+            portfolio = r.critiques?.Where(x => x.type == "Portfolio")?.Count() ?? 0,
+            state = r.state,
+            submitted = r.submitted,
+            subtotal = r.subtotal,
+            total = r.total,
+            track = r.track?.title ?? "None",
+            zip = r.zip
+        };
     }
 }

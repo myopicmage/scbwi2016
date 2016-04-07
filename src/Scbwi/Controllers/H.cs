@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Newtonsoft;
 using Microsoft.AspNet.Mvc;
 using Newtonsoft.Json;
+using Scbwi.Models;
 
 namespace Scbwi.Controllers {
-    public class H {
-        //public static ContentResult Success(object data) => 
+    public static class H {
     }
 }

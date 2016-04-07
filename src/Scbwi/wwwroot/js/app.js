@@ -17,12 +17,12 @@ app.config(function ($mdThemingProvider) {
         '200': 'ef9a9a',
         '300': 'e57373',
         '400': 'ef5350',
-        '500': '03a9f4', //main
+        '500': 'f69331', //main
         '600': 'e53935',
         '700': 'd32f2f',
-        '800': '0277bd', //md-hue-2
+        '800': 'ffcb98', //md-hue-2
         '900': 'b71c1c',
-        'A100': 'ff8a80',
+        'A100': 'EF5B34',
         'A200': 'ff5252',
         'A400': 'ff1744',
         'A700': 'd50000',
@@ -32,8 +32,14 @@ app.config(function ($mdThemingProvider) {
          '200', '300', '400', 'A100'],
         'contrastLightColors': undefined    // could also specify this if default was 'dark'
     });
-    $mdThemingProvider.theme('default')
-      .primaryPalette('amazingPaletteName')
+
+    $mdThemingProvider
+        .theme('default')
+        .primaryPalette('amazingPaletteName', {
+            'default': '500',
+            'hue-2': '800',
+            'hue-3': 'A100'
+        });
 });
 
 app.controller('AppCtrl', function () {
@@ -45,7 +51,34 @@ app.controller('AppCtrl', function () {
 });
 
 app.controller('RegCtrl', function ($http, $scope) {
+    var self = this;
 
+    self.registrations = [];
+    self.areyousure = [];
+
+    self.getRegistrations = function () {
+        $http({
+            method: 'get',
+            url: '/admin/getregistrations'
+        }).then(function (data) {
+            self.registrations = data.data;
+        });
+    };
+
+    self.deleteRegistration = function (id) {
+        self.areyousure[id] = true;
+    };
+
+    self.confirmDelete = function (id) {
+        $http({
+            method: 'post',
+            url: '/admin/deleteregistration?regid=' + id,
+        }).then(function () {
+            self.getRegistrations();
+        });
+    };
+
+    self.getRegistrations();
 });
 
 app.controller('DashboardCtrl', function () {
@@ -62,6 +95,8 @@ app.controller('RegistrationController', function ($http, $scope) {
     self.memberBox = true;
     self.showPackages = false;
     self.timetopay = false;
+    self.reg.manuscript = 0;
+    self.reg.portfolio = 0;
 
     self.packageSelect = function () {
         self.showTracks = true;
@@ -95,8 +130,8 @@ app.controller('RegistrationController', function ($http, $scope) {
             packageid: self.reg.package,
             comprehensiveid: self.reg.comprehensive,
             trackid: self.reg.track,
-            couponid: self.reg.coupon,
-            manuscripts: self.reg.manuscript,
+            coupon: self.reg.coupon,
+            manuscript: self.reg.manuscript,
             portfolio: self.reg.portfolio
         };
     };
@@ -284,9 +319,9 @@ app.controller('CouponController', function ($http) {
             method: 'post',
             url: '/admin/addcoupon',
             data: {
-                type: main.newcoupon.type,
-                value: main.newcoupon.value,
-                text: main.newcoupon.text
+                type: self.newcoupon.type,
+                value: self.newcoupon.value,
+                text: self.newcoupon.text
             }
         })
         .then(function (data) {
@@ -319,9 +354,9 @@ app.controller('DateController', function ($http) {
             method: 'post',
             url: '/admin/adddate',
             data: {
-                type: main.newcoupon.type,
-                value: main.newcoupon.value,
-                text: main.newcoupon.text
+                type: self.newcoupon.type,
+                value: self.newcoupon.value,
+                text: self.newcoupon.text
             }
         })
         .then(function (data) {

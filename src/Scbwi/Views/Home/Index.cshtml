@@ -1,7 +1,7 @@
 ﻿<div layout="column" flex ng-controller="RegistrationController as main">
-    <md-toolbar class="md-toolbar">
+    <md-toolbar class="md-toolbar md-hue-2">
         <div class="md-toolbar-tools">
-            <h3>
+            <h3 style="color: #353535">
                 SCBWI Florida June Registration
             </h3>
         </div>
@@ -142,10 +142,13 @@
                             <md-checkbox flex ng-value="manuscript" class="md-primary" ng-model="main.m_critique">
                                 Manuscript Critique
                             </md-checkbox>
-                            <md-input-container ng-show="main.m_critique === true" flex>
-                                <label>How many?</label>
-                                <input type="text" ng-model="main.reg.manuscript" />
-                            </md-input-container>
+                            <md-radio-group ng-show="main.m_critique === true" ng-model="main.reg.manuscript" flex layout="row">
+                                <md-radio-button ng-value="0" flex class="md-primary">0</md-radio-button>
+                                <md-radio-button ng-value="1" flex class="md-primary">1</md-radio-button>
+                                <md-radio-button ng-value="2" flex class="md-primary">2</md-radio-button>
+                                <md-radio-button ng-value="3" flex class="md-primary">3</md-radio-button>
+                                <md-radio-button ng-value="4" flex class="md-primary">4</md-radio-button>
+                            </md-radio-group>
                         </div>
                     </div>
                     <div class="row">
@@ -156,10 +159,13 @@
                             <md-checkbox flex ng-value="portfolio" class="md-primary" ng-model="main.p_critique">
                                 Portfolio Review
                             </md-checkbox>
-                            <md-input-container ng-show="main.p_critique === true" flex>
-                                <label>How many?</label>
-                                <input type="text" ng-model="main.reg.portfolio" />
-                            </md-input-container>
+                            <md-radio-group ng-show="main.p_critique === true" ng-model="main.reg.portfolio" flex layout="row">
+                                <md-radio-button ng-value="0" flex class="md-primary">0</md-radio-button>
+                                <md-radio-button ng-value="1" flex class="md-primary">1</md-radio-button>
+                                <md-radio-button ng-value="2" flex class="md-primary">2</md-radio-button>
+                                <md-radio-button ng-value="3" flex class="md-primary">3</md-radio-button>
+                                <md-radio-button ng-value="4" flex class="md-primary">4</md-radio-button>
+                            </md-radio-group>
                         </div>
                     </div>
                 </md-card-content>
