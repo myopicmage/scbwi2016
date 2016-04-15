@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Scbwi.Models;
 using Microsoft.AspNet.Authorization;
@@ -56,6 +54,13 @@ namespace Scbwi.Controllers {
                 text = x.text
             }));
 
+        public IActionResult DumpCSV() => Json(ToCSV(db.Registrations
+            .Include(x => x.comprehensive)
+            .Include(x => x.track)
+            .Include(x => x.package)
+            .Include(x => x.code)
+            .ToList()));
+
         [HttpPost]
         public IActionResult AddPackage([FromBody] Package p) {
             if (ModelState.IsValid) {
@@ -66,6 +71,7 @@ namespace Scbwi.Controllers {
             return Json(true);
         }
 
+        [HttpPost]
         public IActionResult AddTrack([FromBody] Track t) {
             if (ModelState.IsValid) {
                 db.Tracks.Add(t);
@@ -75,6 +81,7 @@ namespace Scbwi.Controllers {
             return Json(true);
         }
 
+        [HttpPost]
         public IActionResult AddComprehensive([FromBody] Comprehensive c) {
             if (ModelState.IsValid) {
                 db.Comprehensives.Add(c);
@@ -84,6 +91,7 @@ namespace Scbwi.Controllers {
             return Json(true);
         }
 
+        [HttpPost]
         public IActionResult AddCoupon([FromBody] CouponCode c) {
             if (ModelState.IsValid) {
                 db.CouponCodes.Add(c);
@@ -93,19 +101,12 @@ namespace Scbwi.Controllers {
             return Json(true);
         }
 
+        [HttpPost]
         public IActionResult AddDate([FromBody] ImportantDate d) {
             if (ModelState.IsValid) {
                 db.Dates.Add(d);
                 db.SaveChanges();
             }
-
-            return Json(true);
-        }
-
-        public IActionResult DeleteBad() {
-            var p = db.Tracks.Single(x => x.id == 1);
-            db.Tracks.Remove(p);
-            db.SaveChanges();
 
             return Json(true);
         }
@@ -154,5 +155,9 @@ namespace Scbwi.Controllers {
             track = r.track?.title ?? "None",
             zip = r.zip
         };
+
+        private string ToCSV(List<Registration> list) {
+            return "";
+        }
     }
 }

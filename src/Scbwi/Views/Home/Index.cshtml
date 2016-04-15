@@ -16,25 +16,28 @@
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content>
-                    <md-input-container>
+                    <md-input-container flex="20">
                         <label>First Name</label>
                         <input ng-model="main.reg.first" />
                     </md-input-container>
-                    <md-input-container>
+                    <md-input-container flex="20">
                         <label>Last Name</label>
                         <input ng-model="main.reg.last" />
                     </md-input-container>
-                    <md-input-container>
+                    <md-input-container flex="20">
                         <label>Email</label>
                         <input ng-model="main.reg.email" />
                     </md-input-container>
-                    <md-input-container>
+                    <md-input-container flex="20">
                         <label>Phone</label>
                         <input ng-model="main.reg.phone" />
                     </md-input-container>
-                    <md-input-container>
+                    <md-input-container flex="20">
                         <label>Country</label>
-                        <input ng-model="main.reg.country" />
+                        <md-select ng-model="main.reg.country">
+                            <md-option value="USA">United States</md-option>
+                            <md-option value="Canada">Canada</md-option>
+                        </md-select>
                     </md-input-container>
 
                     <br />
