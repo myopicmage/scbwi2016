@@ -8,5 +8,6 @@ namespace Scbwi.Models {
         public int id { get; set; }
         public string type { get; set; }
         public decimal price { get; set; }
+        public int Registrationid { get; set; }
     }
 }

@@ -1,16 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Microsoft.AspNet.Mvc;
 using Scbwi.Models;
 using Microsoft.AspNet.Authorization;
 using Microsoft.Data.Entity;
+using CsvHelper;
+using Microsoft.Data.Entity.Query.Internal;
+using Newtonsoft.Json;
 
-namespace Scbwi.Controllers {
+namespace Scbwi.Controllers
+{
     [Authorize]
-    public class AdminController : Controller {
+    public class AdminController : Controller
+    {
         private readonly ApplicationDbContext db;
 
-        public AdminController(ApplicationDbContext appctx) {
+        public AdminController(ApplicationDbContext appctx)
+        {
             db = appctx;
         }
 
@@ -34,12 +42,14 @@ namespace Scbwi.Controllers {
 
         public IActionResult GetDates() => Json(db.Dates.ToList());
 
-        public IActionResult GetRegistrations() {
+        public IActionResult GetRegistrations()
+        {
             var r = db.Registrations
                .Include(x => x.comprehensive)
                .Include(x => x.track)
                .Include(x => x.package)
                .Include(x => x.code)
+               .Include(x => x.critiques)
                .ToList();
 
             return Json(ToDTOList(r));
@@ -48,22 +58,39 @@ namespace Scbwi.Controllers {
         public IActionResult GetCoupons() => Json(db
             .CouponCodes
             .ToList()
-            .Select(x => new {
+            .Select(x => new
+            {
                 type = x.type.ToString(),
-                value = x.value,
-                text = x.text
+                x.value,
+                x.text
             }));
 
-        public IActionResult DumpCSV() => Json(ToCSV(db.Registrations
-            .Include(x => x.comprehensive)
-            .Include(x => x.track)
-            .Include(x => x.package)
-            .Include(x => x.code)
-            .ToList()));
+        public IActionResult DumpCSV()
+        {
+            var records = db.Registrations
+                .Include(x => x.comprehensive)
+                .Include(x => x.track)
+                .Include(x => x.package)
+                .Include(x => x.code)
+                .Include(x => x.critiques)
+                .Select(ToDTO)
+                .ToList();
+
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            var csv = new CsvWriter(writer);
+            csv.WriteRecords(records);
+            writer.Flush();
+            stream.Position = 0;
+
+            return File(stream, "text/csv", $"registrations-{DateTime.Now.ToString("yyyy-M-d")}.csv");
+        }
 
         [HttpPost]
-        public IActionResult AddPackage([FromBody] Package p) {
-            if (ModelState.IsValid) {
+        public IActionResult AddPackage([FromBody] Package p)
+        {
+            if (ModelState.IsValid)
+            {
                 db.Packages.Add(p);
                 db.SaveChanges();
             }
@@ -72,8 +99,10 @@ namespace Scbwi.Controllers {
         }
 
         [HttpPost]
-        public IActionResult AddTrack([FromBody] Track t) {
-            if (ModelState.IsValid) {
+        public IActionResult AddTrack([FromBody] Track t)
+        {
+            if (ModelState.IsValid)
+            {
                 db.Tracks.Add(t);
                 db.SaveChanges();
             }
@@ -82,8 +111,10 @@ namespace Scbwi.Controllers {
         }
 
         [HttpPost]
-        public IActionResult AddComprehensive([FromBody] Comprehensive c) {
-            if (ModelState.IsValid) {
+        public IActionResult AddComprehensive([FromBody] Comprehensive c)
+        {
+            if (ModelState.IsValid)
+            {
                 db.Comprehensives.Add(c);
                 db.SaveChanges();
             }
@@ -92,8 +123,10 @@ namespace Scbwi.Controllers {
         }
 
         [HttpPost]
-        public IActionResult AddCoupon([FromBody] CouponCode c) {
-            if (ModelState.IsValid) {
+        public IActionResult AddCoupon([FromBody] CouponCode c)
+        {
+            if (ModelState.IsValid)
+            {
                 db.CouponCodes.Add(c);
                 db.SaveChanges();
             }
@@ -102,8 +135,10 @@ namespace Scbwi.Controllers {
         }
 
         [HttpPost]
-        public IActionResult AddDate([FromBody] ImportantDate d) {
-            if (ModelState.IsValid) {
+        public IActionResult AddDate([FromBody] ImportantDate d)
+        {
+            if (ModelState.IsValid)
+            {
                 db.Dates.Add(d);
                 db.SaveChanges();
             }
@@ -112,26 +147,34 @@ namespace Scbwi.Controllers {
         }
 
         [HttpPost]
-        public IActionResult DeleteRegistration(int regid) {
+        public IActionResult DeleteRegistration(int regid)
+        {
             var r = db.Registrations.SingleOrDefault(x => x.id == regid);
 
-            if (r == null) {
+            if (r == null)
+            {
                 return Json(false);
             }
 
-            try {
+            try
+            {
                 db.Registrations.Remove(r);
                 db.SaveChanges();
-            } catch {
+            }
+            catch
+            {
                 return Json(false);
             }
 
             return Json(true);
         }
 
-        private List<RegistrationDTO> ToDTOList(List<Registration> list) => list.Select(x => ToDTO(x)).ToList();
+        private List<RegistrationDTO> ToDTOList(IEnumerable<Registration> list) => list.Select(ToDTO).ToList();
 
-        private RegistrationDTO ToDTO(Registration r) => new RegistrationDTO {
+        private RegistrationDTO ToDTO(Registration r) => new RegistrationDTO
+        {
+            first = r.first,
+            last = r.last,
             address1 = r.address1,
             address2 = r.address2,
             city = r.city,
@@ -140,14 +183,12 @@ namespace Scbwi.Controllers {
             country = r.country,
             coupon = r.code?.text ?? "None",
             email = r.email,
-            first = r.first,
             id = r.id,
-            last = r.last,
-            manuscript = r.critiques?.Where(x => x.type == "Manuscript")?.Count() ?? 0,
+            manuscript = r.critiques?.Count(x => x.type == "Manuscript") ?? 0,
             package = r.package?.title ?? "None",
             paid = r.paid,
             phone = r.phone,
-            portfolio = r.critiques?.Where(x => x.type == "Portfolio")?.Count() ?? 0,
+            portfolio = r.critiques?.Count(x => x.type == "Portfolio") ?? 0,
             state = r.state,
             submitted = r.submitted,
             subtotal = r.subtotal,
@@ -155,9 +196,5 @@ namespace Scbwi.Controllers {
             track = r.track?.title ?? "None",
             zip = r.zip
         };
-
-        private string ToCSV(List<Registration> list) {
-            return "";
-        }
     }
 }

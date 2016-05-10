@@ -108,6 +108,18 @@
                     </md-item-content>
                 </a>
             </md-list-item>
+            <md-list-item>
+                <a ng-click="main.go('/admin/dumpcsv')">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <md-button class="md-fab md-primary md-mini">{{main.pending}}</md-button>
+                        </div>
+                        <div class="inset menu-text">
+                            Get Spreadsheet
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-list-item>
             <md-divider></md-divider>
             <md-list-item>
                 <a ng-click="main.go('/account/logoff');">
